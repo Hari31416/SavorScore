@@ -162,12 +162,12 @@ const RatingList = () => {
                         {rating.restaurant.name}
                       </Card.Subtitle>
                     </div>
-                    <div className="rating-score-small">
+                    <span className="rating-badge rating-list-badge">
                       {rating.overallScore
                         ? rating.overallScore
                         : rating.overallFlavorExperience}
                       /5
-                    </div>
+                    </span>
                   </div>
 
                   <p className="text-muted small">

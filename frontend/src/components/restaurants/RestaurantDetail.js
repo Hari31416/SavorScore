@@ -167,7 +167,19 @@ const RestaurantDetail = () => {
 
               {averageRating ? (
                 <>
-                  <div className="rating-score mb-2">{averageRating}</div>
+                  <div className="rating-score-container">
+                    <div className="rating-score">{averageRating}</div>
+                    <div className="rating-score-label">
+                      {(() => {
+                        const score = parseFloat(averageRating) || 0;
+                        if (score <= 1.5) return "Poor";
+                        if (score <= 2.5) return "Fair";
+                        if (score <= 3.5) return "Good";
+                        if (score <= 4.5) return "Very Good";
+                        return "Excellent";
+                      })()}
+                    </div>
+                  </div>
                   <div className="text-muted mb-3">
                     Based on {ratings.length} rating
                     {ratings.length !== 1 ? "s" : ""}
@@ -204,44 +216,44 @@ const RestaurantDetail = () => {
                 </Link>
               </Card.Body>
             </Card>
-      ) : (
-        <Row>
-          {ratings.map((rating) => (
-            <Col md={6} className="mb-4" key={rating._id}>
-              <Card>
-                <Card.Body>
-                  <div className="d-flex justify-content-between align-items-center mb-3">
-                    <h5 className="mb-0">{rating.dish.name}</h5>
-                    <span className="badge bg-primary rounded-pill">
-                      {rating.overallScore !== undefined
-                        ? rating.overallScore
-                        : rating.overallFlavorExperience}
-                      /5
-                    </span>
-                  </div>
+          ) : (
+            <Row>
+              {ratings.map((rating) => (
+                <Col md={6} className="mb-4" key={rating._id}>
+                  <Card>
+                    <Card.Body>
+                      <div className="d-flex justify-content-between align-items-center mb-3">
+                        <h5 className="mb-0">{rating.dish.name}</h5>
+                        <span className="rating-badge">
+                          {rating.overallScore !== undefined
+                            ? rating.overallScore
+                            : rating.overallFlavorExperience}
+                          /5
+                        </span>
+                      </div>
 
-                  <p className="text-muted small">
-                    Rated on {new Date(rating.date).toLocaleDateString()}
-                  </p>
+                      <p className="text-muted small">
+                        Rated on {new Date(rating.date).toLocaleDateString()}
+                      </p>
 
-                  {rating.notes && <p className="mt-2">{rating.notes}</p>}
-                </Card.Body>
-                <Card.Footer className="bg-white">
-                  <Link to={`/ratings/${rating._id}`}>
-                    <Button
-                      variant="outline-primary"
-                      size="sm"
-                      className="w-100"
-                    >
-                      View Details
-                    </Button>
-                  </Link>
-                </Card.Footer>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      )}
+                      {rating.notes && <p className="mt-2">{rating.notes}</p>}
+                    </Card.Body>
+                    <Card.Footer className="bg-white">
+                      <Link to={`/ratings/${rating._id}`}>
+                        <Button
+                          variant="outline-primary"
+                          size="sm"
+                          className="w-100"
+                        >
+                          View Details
+                        </Button>
+                      </Link>
+                    </Card.Footer>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          )}
         </Col>
       </Row>
     </div>

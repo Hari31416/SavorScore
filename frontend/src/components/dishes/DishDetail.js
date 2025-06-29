@@ -13,6 +13,7 @@ const DishDetail = () => {
   const [ratings, setRatings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showDetailedRatings, setShowDetailedRatings] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -159,97 +160,135 @@ const DishDetail = () => {
           </Card>
         </Col>
         <Col md={4}>
-          <Card>
+          <Card className="text-center">
             <Card.Body>
               <h4 className="mb-3">Rating Summary</h4>
 
               {averages ? (
                 <>
-                  <div className="d-flex justify-content-between align-items-center mb-2">
+                  <div className="rating-score-container">
                     <div className="rating-score">
                       {averages.overallScore ||
                         averages.overallFlavorExperience}
                     </div>
-                    <div className="text-muted">
-                      Based on {ratings.length} rating
-                      {ratings.length !== 1 ? "s" : ""}
+                    <div className="rating-score-label">
+                      {(() => {
+                        const score = parseFloat(
+                          averages.overallScore ||
+                            averages.overallFlavorExperience
+                        );
+                        if (score <= 1.5) return "Poor";
+                        if (score <= 2.5) return "Fair";
+                        if (score <= 3.5) return "Good";
+                        if (score <= 4.5) return "Very Good";
+                        return "Excellent";
+                      })()}
                     </div>
                   </div>
-
+                  <div className="text-muted mb-3">
+                    Based on {ratings.length} rating
+                    {ratings.length !== 1 ? "s" : ""}
+                  </div>
                   {averages.overallScore && (
-                    <div className="text-center small text-muted mt-2 mb-3">
+                    <div className="text-center small text-muted mb-3">
                       Overall Score is a weighted average of all ratings
                     </div>
                   )}
 
-                  <div className="mt-4">
-                    <div className="d-flex justify-content-between mb-1">
-                      <span>Ingredient Quality</span>
-                      <span>{averages.ingredientQuality}/5</span>
-                    </div>
-                    <div className="metric-bar">
-                      <div
-                        className="metric-fill"
-                        style={{ width: `${averages.ingredientQuality * 20}%` }}
-                      ></div>
-                    </div>
+                  <hr className="my-4" />
+
+                  <h5 className="mb-3">Detailed Breakdown</h5>
+
+                  <div className="d-grid gap-2 mb-3">
+                    <Button
+                      variant="outline-primary"
+                      size="sm"
+                      onClick={() =>
+                        setShowDetailedRatings(!showDetailedRatings)
+                      }
+                    >
+                      {showDetailedRatings ? "Hide Details" : "Show Details"}
+                    </Button>
                   </div>
 
-                  <div className="mt-3">
-                    <div className="d-flex justify-content-between mb-1">
-                      <span>Texture & Mouthfeel</span>
-                      <span>{averages.textureMouthfeel}/5</span>
-                    </div>
-                    <div className="metric-bar">
-                      <div
-                        className="metric-fill"
-                        style={{ width: `${averages.textureMouthfeel * 20}%` }}
-                      ></div>
-                    </div>
-                  </div>
+                  {showDetailedRatings && (
+                    <>
+                      <div className="mb-3">
+                        <div className="d-flex justify-content-between mb-1">
+                          <span>Ingredient Quality</span>
+                          <span>{averages.ingredientQuality}/5</span>
+                        </div>
+                        <div className="metric-bar">
+                          <div
+                            className="metric-fill"
+                            style={{
+                              width: `${averages.ingredientQuality * 20}%`,
+                            }}
+                          ></div>
+                        </div>
+                      </div>
 
-                  <div className="mt-3">
-                    <div className="d-flex justify-content-between mb-1">
-                      <span>Execution & Craftsmanship</span>
-                      <span>{averages.executionCraftsmanship}/5</span>
-                    </div>
-                    <div className="metric-bar">
-                      <div
-                        className="metric-fill"
-                        style={{
-                          width: `${averages.executionCraftsmanship * 20}%`,
-                        }}
-                      ></div>
-                    </div>
-                  </div>
+                      <div className="mb-3">
+                        <div className="d-flex justify-content-between mb-1">
+                          <span>Texture & Mouthfeel</span>
+                          <span>{averages.textureMouthfeel}/5</span>
+                        </div>
+                        <div className="metric-bar">
+                          <div
+                            className="metric-fill"
+                            style={{
+                              width: `${averages.textureMouthfeel * 20}%`,
+                            }}
+                          ></div>
+                        </div>
+                      </div>
 
-                  <div className="mt-3">
-                    <div className="d-flex justify-content-between mb-1">
-                      <span>Value for Money</span>
-                      <span>{averages.valueForMoney}/5</span>
-                    </div>
-                    <div className="metric-bar">
-                      <div
-                        className="metric-fill"
-                        style={{ width: `${averages.valueForMoney * 20}%` }}
-                      ></div>
-                    </div>
-                  </div>
+                      <div className="mb-3">
+                        <div className="d-flex justify-content-between mb-1">
+                          <span>Execution & Craftsmanship</span>
+                          <span>{averages.executionCraftsmanship}/5</span>
+                        </div>
+                        <div className="metric-bar">
+                          <div
+                            className="metric-fill"
+                            style={{
+                              width: `${averages.executionCraftsmanship * 20}%`,
+                            }}
+                          ></div>
+                        </div>
+                      </div>
 
-                  <div className="mt-3">
-                    <div className="d-flex justify-content-between mb-1">
-                      <span>Craving & Reorder Likelihood</span>
-                      <span>{averages.cravingReorderLikelihood}/5</span>
-                    </div>
-                    <div className="metric-bar">
-                      <div
-                        className="metric-fill"
-                        style={{
-                          width: `${averages.cravingReorderLikelihood * 20}%`,
-                        }}
-                      ></div>
-                    </div>
-                  </div>
+                      <div className="mb-3">
+                        <div className="d-flex justify-content-between mb-1">
+                          <span>Value for Money</span>
+                          <span>{averages.valueForMoney}/5</span>
+                        </div>
+                        <div className="metric-bar">
+                          <div
+                            className="metric-fill"
+                            style={{ width: `${averages.valueForMoney * 20}%` }}
+                          ></div>
+                        </div>
+                      </div>
+
+                      <div className="mb-3">
+                        <div className="d-flex justify-content-between mb-1">
+                          <span>Craving & Reorder Likelihood</span>
+                          <span>{averages.cravingReorderLikelihood}/5</span>
+                        </div>
+                        <div className="metric-bar">
+                          <div
+                            className="metric-fill"
+                            style={{
+                              width: `${
+                                averages.cravingReorderLikelihood * 20
+                              }%`,
+                            }}
+                          ></div>
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </>
               ) : (
                 <p className="text-muted">No ratings yet</p>
@@ -267,7 +306,7 @@ const DishDetail = () => {
           </Card>
         </Col>
       </Row>
-      
+
       <Row className="justify-content-center mb-4">
         <Col md={8}>
           <h3 className="mb-3">Ratings by Restaurant</h3>
@@ -282,42 +321,42 @@ const DishDetail = () => {
             </Card>
           ) : (
             <Row>
-          {ratings.map((rating) => (
-            <Col md={6} className="mb-4" key={rating._id}>
-              <Card>
-                <Card.Body>
-                  <div className="d-flex justify-content-between align-items-center mb-3">
-                    <h5 className="mb-0">{rating.restaurant.name}</h5>
-                    <span className="badge bg-primary rounded-pill">
-                      {rating.overallScore !== undefined
-                        ? rating.overallScore
-                        : rating.overallFlavorExperience}
-                      /5
-                    </span>
-                  </div>
+              {ratings.map((rating) => (
+                <Col md={6} className="mb-4" key={rating._id}>
+                  <Card>
+                    <Card.Body>
+                      <div className="d-flex justify-content-between align-items-center mb-3">
+                        <h5 className="mb-0">{rating.restaurant.name}</h5>
+                        <span className="rating-badge">
+                          {rating.overallScore !== undefined
+                            ? rating.overallScore
+                            : rating.overallFlavorExperience}
+                          /5
+                        </span>
+                      </div>
 
-                  <p className="text-muted small">
-                    Rated on {new Date(rating.date).toLocaleDateString()}
-                  </p>
+                      <p className="text-muted small">
+                        Rated on {new Date(rating.date).toLocaleDateString()}
+                      </p>
 
-                  {rating.notes && <p className="mt-2">{rating.notes}</p>}
-                </Card.Body>
-                <Card.Footer className="bg-white">
-                  <Link to={`/ratings/${rating._id}`}>
-                    <Button
-                      variant="outline-primary"
-                      size="sm"
-                      className="w-100"
-                    >
-                      View Details
-                    </Button>
-                  </Link>
-                </Card.Footer>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      )}
+                      {rating.notes && <p className="mt-2">{rating.notes}</p>}
+                    </Card.Body>
+                    <Card.Footer className="bg-white">
+                      <Link to={`/ratings/${rating._id}`}>
+                        <Button
+                          variant="outline-primary"
+                          size="sm"
+                          className="w-100"
+                        >
+                          View Details
+                        </Button>
+                      </Link>
+                    </Card.Footer>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          )}
         </Col>
       </Row>
     </div>

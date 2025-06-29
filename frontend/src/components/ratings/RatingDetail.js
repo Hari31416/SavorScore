@@ -17,6 +17,7 @@ const RatingDetail = () => {
   const [rating, setRating] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showDetailedRatings, setShowDetailedRatings] = useState(false);
 
   useEffect(() => {
     const fetchRating = async () => {
@@ -130,112 +131,127 @@ const RatingDetail = () => {
           )}
         </Col>
         <Col md={4}>
-          <Card className="mb-4">
-            <Card.Body>
-              <h4 className="mb-3">Overall Score</h4>
-              <div className="rating-score mb-2">
-                {rating.overallScore ? rating.overallScore : "N/A"}
-              </div>
-              <div className="rating-score-label mb-3">
-                {(() => {
-                  const score = rating.overallScore || 0;
-                  if (score <= 1.5) return "Poor";
-                  if (score <= 2.5) return "Fair";
-                  if (score <= 3.5) return "Good";
-                  if (score <= 4.5) return "Very Good";
-                  return "Excellent";
-                })()}
-              </div>
-            </Card.Body>
-          </Card>
-          
           <Card>
             <Card.Body>
-              <h4 className="mb-3">Detailed Ratings</h4>
+              <h4 className="mb-3">Rating Summary</h4>
 
-              <div className="mb-3">
-                <div className="d-flex justify-content-between mb-1">
-                  <span>Overall Flavor Experience</span>
-                  <span>{rating.overallFlavorExperience}/5</span>
+              <div className="rating-score-container">
+                <div className="rating-score">
+                  {rating.overallScore ? rating.overallScore : "N/A"}
                 </div>
-                <div className="metric-bar">
-                  <div
-                    className="metric-fill"
-                    style={{
-                      width: `${rating.overallFlavorExperience * 20}%`,
-                    }}
-                  ></div>
+                <div className="rating-score-label">
+                  {(() => {
+                    const score = rating.overallScore || 0;
+                    if (score <= 1.5) return "Poor";
+                    if (score <= 2.5) return "Fair";
+                    if (score <= 3.5) return "Good";
+                    if (score <= 4.5) return "Very Good";
+                    return "Excellent";
+                  })()}
                 </div>
               </div>
 
-              <div className="mb-3">
-                <div className="d-flex justify-content-between mb-1">
-                  <span>Ingredient Quality</span>
-                  <span>{rating.ingredientQuality}/5</span>
-                </div>
-                <div className="metric-bar">
-                  <div
-                    className="metric-fill"
-                    style={{ width: `${rating.ingredientQuality * 20}%` }}
-                  ></div>
-                </div>
+              <hr className="my-4" />
+
+              <h5 className="mb-3">Detailed Breakdown</h5>
+
+              <div className="d-grid gap-2 mb-3">
+                <Button
+                  variant="outline-primary"
+                  size="sm"
+                  onClick={() => setShowDetailedRatings(!showDetailedRatings)}
+                >
+                  {showDetailedRatings ? "Hide Details" : "Show Details"}
+                </Button>
               </div>
 
-              <div className="mb-3">
-                <div className="d-flex justify-content-between mb-1">
-                  <span>Texture & Mouthfeel</span>
-                  <span>{rating.textureMouthfeel}/5</span>
-                </div>
-                <div className="metric-bar">
-                  <div
-                    className="metric-fill"
-                    style={{ width: `${rating.textureMouthfeel * 20}%` }}
-                  ></div>
-                </div>
-              </div>
+              {showDetailedRatings && (
+                <>
+                  <div className="mb-3">
+                    <div className="d-flex justify-content-between mb-1">
+                      <span>Overall Flavor Experience</span>
+                      <span>{rating.overallFlavorExperience}/5</span>
+                    </div>
+                    <div className="metric-bar">
+                      <div
+                        className="metric-fill"
+                        style={{
+                          width: `${rating.overallFlavorExperience * 20}%`,
+                        }}
+                      ></div>
+                    </div>
+                  </div>
 
-              <div className="mb-3">
-                <div className="d-flex justify-content-between mb-1">
-                  <span>Execution & Craftsmanship</span>
-                  <span>{rating.executionCraftsmanship}/5</span>
-                </div>
-                <div className="metric-bar">
-                  <div
-                    className="metric-fill"
-                    style={{
-                      width: `${rating.executionCraftsmanship * 20}%`,
-                    }}
-                  ></div>
-                </div>
-              </div>
+                  <div className="mb-3">
+                    <div className="d-flex justify-content-between mb-1">
+                      <span>Ingredient Quality</span>
+                      <span>{rating.ingredientQuality}/5</span>
+                    </div>
+                    <div className="metric-bar">
+                      <div
+                        className="metric-fill"
+                        style={{ width: `${rating.ingredientQuality * 20}%` }}
+                      ></div>
+                    </div>
+                  </div>
 
-              <div className="mb-3">
-                <div className="d-flex justify-content-between mb-1">
-                  <span>Value for Money</span>
-                  <span>{rating.valueForMoney}/5</span>
-                </div>
-                <div className="metric-bar">
-                  <div
-                    className="metric-fill"
-                    style={{ width: `${rating.valueForMoney * 20}%` }}
-                  ></div>
-                </div>
-              </div>
+                  <div className="mb-3">
+                    <div className="d-flex justify-content-between mb-1">
+                      <span>Texture & Mouthfeel</span>
+                      <span>{rating.textureMouthfeel}/5</span>
+                    </div>
+                    <div className="metric-bar">
+                      <div
+                        className="metric-fill"
+                        style={{ width: `${rating.textureMouthfeel * 20}%` }}
+                      ></div>
+                    </div>
+                  </div>
 
-              <div className="mb-3">
-                <div className="d-flex justify-content-between mb-1">
-                  <span>Craving & Reorder Likelihood</span>
-                  <span>{rating.cravingReorderLikelihood}/5</span>
-                </div>
-                <div className="metric-bar">
-                  <div
-                    className="metric-fill"
-                    style={{
-                      width: `${rating.cravingReorderLikelihood * 20}%`,
-                    }}
-                  ></div>
-                </div>
-              </div>
+                  <div className="mb-3">
+                    <div className="d-flex justify-content-between mb-1">
+                      <span>Execution & Craftsmanship</span>
+                      <span>{rating.executionCraftsmanship}/5</span>
+                    </div>
+                    <div className="metric-bar">
+                      <div
+                        className="metric-fill"
+                        style={{
+                          width: `${rating.executionCraftsmanship * 20}%`,
+                        }}
+                      ></div>
+                    </div>
+                  </div>
+
+                  <div className="mb-3">
+                    <div className="d-flex justify-content-between mb-1">
+                      <span>Value for Money</span>
+                      <span>{rating.valueForMoney}/5</span>
+                    </div>
+                    <div className="metric-bar">
+                      <div
+                        className="metric-fill"
+                        style={{ width: `${rating.valueForMoney * 20}%` }}
+                      ></div>
+                    </div>
+                  </div>
+
+                  <div className="mb-3">
+                    <div className="d-flex justify-content-between mb-1">
+                      <span>Craving & Reorder Likelihood</span>
+                      <span>{rating.cravingReorderLikelihood}/5</span>
+                    </div>
+                    <div className="metric-bar">
+                      <div
+                        className="metric-fill"
+                        style={{
+                          width: `${rating.cravingReorderLikelihood * 20}%`,
+                        }}
+                      ></div>
+                    </div>
+                  </div>
+                </>
+              )}
             </Card.Body>
           </Card>
         </Col>
