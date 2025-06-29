@@ -1,21 +1,21 @@
-# SavorScore: Dish Judgment Tracker
+# SavorScore: Dish Rating Tracker
 
-SavorScore is a web application for tracking and analyzing your culinary experiences across different restaurants. This application allows you to record detailed judgments of dishes using various metrics, helping you remember your favorites and make informed dining decisions.
+SavorScore is a web application for tracking and analyzing your culinary experiences across different restaurants. This application allows you to record detailed ratings of dishes using various metrics, helping you remember your favorites and make informed dining decisions.
 
 ## Features
 
 - **User Authentication**: Secure registration and login
 - **Restaurant Management**: Add, view, edit, and delete restaurant entries
 - **Dish Catalog**: Build a personal database of dishes across restaurants
-- **Detailed Judgments**: Score dishes on multiple criteria including:
-  - Overall Flavor Experience (1-10)
+- **Detailed Ratings**: Score dishes on multiple criteria including:
+  - Overall Flavor Experience (1-5)
   - Ingredient Quality (1-5)
   - Texture & Mouthfeel (1-5)
   - Execution & Craftsmanship (1-5)
   - Value for Money (1-5)
-  - Craving & Reorder Likelihood (1-10)
+  - Craving & Reorder Likelihood (1-5)
 - **Notes**: Add detailed notes about your dining experience
-- **Filtering and Sorting**: Find judgments quickly with search and sort options
+- **Filtering and Sorting**: Find ratings quickly with search and sort options
 - **Analytics**: View average ratings for restaurants and dishes
 
 ## Tech Stack
@@ -88,8 +88,8 @@ SavorScore is a web application for tracking and analyzing your culinary experie
 - **Dish-Specific Analysis**: Compare the same dish across different restaurants
 - **Advanced Filtering**: Filter by date range, rating threshold, etc.
 - **Data Visualization**: Charts and graphs for analytical insights
-- **Image Upload**: Add photos of dishes to judgments
-- **Social Sharing**: Share your judgments with friends
+- **Image Upload**: Add photos of dishes to ratings
+- **Social Sharing**: Share your ratings with friends
 
 ## License
 

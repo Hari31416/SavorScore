@@ -1,8 +1,8 @@
-# SavorScore: Dish Judgment Tracker
+# SavorScore: Dish Rating Tracker
 
-## Project Overview: Dish Judgment Tracker (MERN Stack)
+## Project Overview: Dish Rating Tracker (MERN Stack)
 
-**Application Goal:** To provide a user-friendly web interface for a user (you) to record, view, edit, and potentially analyze judgments of dishes from various restaurants using a set of defined metrics, with improved data integrity and analytical capabilities.
+**Application Goal:** To provide a user-friendly web interface for a user (you) to record, view, edit, and potentially analyze ratings of dishes from various restaurants using a set of defined metrics, with improved data integrity and analytical capabilities.
 
 **Technology Stack (Same):** MongoDB, Express.js, React.js, Node.js.
 
@@ -17,13 +17,13 @@
       - Create/Read/Update/Delete restaurants (Name, Address, Cuisine Type).
     - **Dish CRUD:**
       - Create/Read/Update/Delete dishes (Name, Description, _can optionally link to a default restaurant if a dish is exclusive, but generally dishes are independent and linked via judgment_).
-    - **Dish Judgment CRUD:**
-      - **Create:** Form to add a new dish judgment. This form will now allow you to **select an existing Restaurant** and **select an existing Dish** from dropdowns (or create new ones on the fly). Metrics, Date, Notes.
+    - **Dish Rating CRUD:**
+      - **Create:** Form to add a new dish rating. This form will now allow you to **select an existing Restaurant** and **select an existing Dish** from dropdowns (or create new ones on the fly). Metrics, Date, Notes.
       - **Read:**
-        - List all judgments (filterable/sortable).
-        - Detailed view for a single judgment, showing linked restaurant and dish details.
+        - List all ratings (filterable/sortable).
+        - Detailed view for a single rating, showing linked restaurant and dish details.
         - Views to list all Restaurants, and all Dishes.
-      - **Update/Delete:** Edit/remove judgments.
+      - **Update/Delete:** Edit/remove ratings.
 
 2.  **Revised Database Schema Design (MongoDB):**
 
@@ -54,19 +54,19 @@
       - `category: String` (e.g., "Appetizer", "Main Course", "Dessert", "Beverage") (Optional)
       - `user: ObjectId` (Reference to `User`, if multi-user or for ownership)
       - `createdAt: Date`, `updatedAt: Date`
-      - _(Note: A dish name like "Margherita Pizza" can exist across multiple restaurants. The specific instance you judge is tied via `DishJudgment`.)_
+      - _(Note: A dish name like "Margherita Pizza" can exist across multiple restaurants. The specific instance you rate is tied via `DishRating`.)_
 
-    - **`DishJudgment` Collection:**
+    - **`DishRating` Collection:**
       - `_id: ObjectId`
       - `dish: ObjectId` (Reference to `Dish` collection)
       - `restaurant: ObjectId` (Reference to `Restaurant` collection)
       - `date: Date`
-      - `overallFlavorExperience: Number` (1-10)
+      - `overallFlavorExperience: Number` (1-5)
       - `ingredientQuality: Number` (1-5)
       - `textureMouthfeel: Number` (1-5)
       - `executionCraftsmanship: Number` (1-5)
       - `valueForMoney: Number` (1-5)
-      - `cravingReorderLikelihood: Number` (1-10)
+      - `cravingReorderLikelihood: Number` (1-5)
       - `notes: String` (Optional, multi-line text)
       - `user: ObjectId` (Reference to `User`, if multi-user or for ownership)
       - `createdAt: Date`, `updatedAt: Date`
@@ -78,8 +78,8 @@
     - `/api/restaurants/:id` (GET, PUT, DELETE)
     - `/api/dishes` (GET, POST)
     - `/api/dishes/:id` (GET, PUT, DELETE)
-    - `/api/judgments` (GET, POST)
-    - `/api/judgments/:id` (GET, PUT, DELETE)
+    - `/api/ratings` (GET, POST)
+    - `/api/ratings/:id` (GET, PUT, DELETE)
       - _For GET requests, you'll need to "populate" the `dish` and `restaurant` fields to get their details._
 
 4.  **UI/UX Sketching (React):**
@@ -87,9 +87,9 @@
     - **New Pages/Components:**
       - `RestaurantsPage` (List of Restaurants, Add/Edit Restaurant forms)
       - `DishesPage` (List of Dishes, Add/Edit Dish forms)
-    - **Revised Add/Edit Judgment Form:**
-      - Now includes dropdowns to select existing `Restaurant` and `Dish` records. Need error handling if no restaurants or dishes exist yet. Consider an inline "Add New Restaurant" or "Add New Dish" button within the judgment form for convenience.
-    - **Display:** Judgment list/detail view will now show linked restaurant and dish names, possibly with links to their respective detail pages.
+    - **Revised Add/Edit Rating Form:**
+      - Now includes dropdowns to select existing `Restaurant` and `Dish` records. Need error handling if no restaurants or dishes exist yet. Consider an inline "Add New Restaurant" or "Add New Dish" button within the rating form for convenience.
+    - **Display:** Rating list/detail view will now show linked restaurant and dish names, possibly with links to their respective detail pages.
 
 ---
 
@@ -99,13 +99,13 @@
 2.  **Database Connection (Same).**
 3.  **Models (Mongoose Schemas):**
 
-    - Create `User.js`, `Restaurant.js`, `Dish.js`, and `DishJudgment.js` models.
-    - Crucially, in `DishJudgment.js`, use `mongoose.Schema.Types.ObjectId` for `dish` and `restaurant` fields, and add `ref: 'Dish'` and `ref: 'Restaurant'` respectively for population.
+    - Create `User.js`, `Restaurant.js`, `Dish.js`, and `DishRating.js` models.
+    - Crucially, in `DishRating.js`, use `mongoose.Schema.Types.ObjectId` for `dish` and `restaurant` fields, and add `ref: 'Dish'` and `ref: 'Restaurant'` respectively for population.
 
 4.  **API Routes & Controllers:**
 
-    - Create separate route and controller files for `restaurants`, `dishes`, and `judgments` (and `auth`).
-    - **Key Consideration:** When fetching `DishJudgment` records, use Mongoose's `.populate('dish')` and `.populate('restaurant')` methods to embed the linked `Dish` and `Restaurant` documents' data directly into the judgment response. This avoids N+1 query problems on the frontend.
+    - Create separate route and controller files for `restaurants`, `dishes`, and `ratings` (and `auth`).
+    - **Key Consideration:** When fetching `DishRating` records, use Mongoose's `.populate('dish')` and `.populate('restaurant')` methods to embed the linked `Dish` and `Restaurant` documents' data directly into the rating response. This avoids N+1 query problems on the frontend.
     - Implement CRUD logic for each model, ensuring proper validation and error handling.
 
 5.  **Authentication Middleware (If Implemented):** Secure all relevant CRUD operations.
@@ -120,25 +120,25 @@
 2.  **Component Structure:**
 
     - Integrate the new `RestaurantsPage` and `DishesPage`.
-    - Update `AddJudgmentPage` and `EditJudgmentPage` to fetch lists of existing restaurants and dishes from the backend to populate dropdowns.
-    - Ensure `JudgmentCard` and `JudgmentDetailPage` can display the details from the populated `dish` and `restaurant` objects.
+    - Update `AddRatingPage` and `EditRatingPage` to fetch lists of existing restaurants and dishes from the backend to populate dropdowns.
+    - Ensure `RatingCard` and `RatingDetailPage` can display the details from the populated `dish` and `restaurant` objects.
 
 3.  **Routing (Same, with new routes for restaurants and dishes).**
 
 4.  **State Management:**
 
-    - You'll now have more data to manage: list of judgments, list of restaurants, list of dishes.
+    - You'll now have more data to manage: list of ratings, list of restaurants, list of dishes.
     - Consider fetching these lists once and storing them in a shared context or higher-level component to avoid refetching.
 
 5.  **API Integration:**
 
     - New `axios` calls for `/api/restaurants` and `/api/dishes`.
-    - Ensure judgment fetch calls correctly handle the populated data.
+    - Ensure rating fetch calls correctly handle the populated data.
 
 6.  **Forms:**
 
     - Develop forms for adding/editing restaurants and dishes.
-    - Modify the judgment form to use select elements for linking to existing restaurant/dish records.
+    - Modify the rating form to use select elements for linking to existing restaurant/dish records.
 
 7.  **Styling (Same).**
 
@@ -150,6 +150,6 @@
   - **Restaurant-Specific Analysis:** What's the average "Overall Flavor" score for _Restaurant X_? Which are its top-rated dishes?
   - **Dish-Specific Analysis:** What's the average "Craving Factor" for "Pizza" across all restaurants you've tried?
   - **Comparison:** Compare the "Execution & Craftsmanship" of "Burger" at _Restaurant A_ vs. _Restaurant B_.
-  - More sophisticated data visualizations that leverage the relationships between judgments, dishes, and restaurants.
+  - More sophisticated data visualizations that leverage the relationships between ratings, dishes, and restaurants.
 
 This revised approach sets you up for a much more powerful and useful application in the long run. Good call on normalizing the data!
