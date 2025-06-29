@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUtensils, faStore, faStar } from "@fortawesome/free-solid-svg-icons";
+import { AuthContext } from "../../context/AuthContext";
 
 const Home = () => {
+  // Get authentication state from AuthContext
+  const { isAuthenticated } = useContext(AuthContext);
+
   return (
     <div className="home-page">
       <Container>
@@ -78,27 +82,29 @@ const Home = () => {
           </Col>
         </Row>
 
-        <Row className="mb-4">
-          <Col md={12} className="text-center">
-            <h2>Get Started</h2>
-            <p>
-              Create an account or login to start recording your culinary
-              experiences.
-            </p>
-            <div className="mt-4">
-              <Link to="/register" className="me-3">
-                <Button variant="primary" size="lg">
-                  Register
-                </Button>
-              </Link>
-              <Link to="/login">
-                <Button variant="outline-primary" size="lg">
-                  Login
-                </Button>
-              </Link>
-            </div>
-          </Col>
-        </Row>
+        {!isAuthenticated && (
+          <Row className="mb-4">
+            <Col md={12} className="text-center">
+              <h2>Get Started</h2>
+              <p>
+                Create an account or login to start recording your culinary
+                experiences.
+              </p>
+              <div className="mt-4">
+                <Link to="/register" className="me-3">
+                  <Button variant="primary" size="lg">
+                    Register
+                  </Button>
+                </Link>
+                <Link to="/login">
+                  <Button variant="outline-primary" size="lg">
+                    Login
+                  </Button>
+                </Link>
+              </div>
+            </Col>
+          </Row>
+        )}
       </Container>
     </div>
   );
