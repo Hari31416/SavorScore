@@ -1,0 +1,107 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUtensils, faStore, faStar } from "@fortawesome/free-solid-svg-icons";
+
+const Home = () => {
+  return (
+    <div className="home-page">
+      <Container>
+        <Row className="mb-5">
+          <Col md={12} className="text-center">
+            <h1 className="display-4 mb-4">Welcome to SavorScore</h1>
+            <p className="lead">
+              Your personal dish judgment tracker. Record, analyze, and remember
+              your culinary experiences.
+            </p>
+          </Col>
+        </Row>
+
+        <Row className="mb-5">
+          <Col md={4} className="mb-4">
+            <Card className="h-100 text-center">
+              <Card.Body>
+                <FontAwesomeIcon
+                  icon={faStore}
+                  size="3x"
+                  className="mb-3 text-primary"
+                />
+                <Card.Title>Restaurants</Card.Title>
+                <Card.Text>
+                  Keep track of all the restaurants you've visited and
+                  categorize them by cuisine.
+                </Card.Text>
+                <Link to="/restaurants">
+                  <Button variant="outline-primary">Explore Restaurants</Button>
+                </Link>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={4} className="mb-4">
+            <Card className="h-100 text-center">
+              <Card.Body>
+                <FontAwesomeIcon
+                  icon={faUtensils}
+                  size="3x"
+                  className="mb-3 text-primary"
+                />
+                <Card.Title>Dishes</Card.Title>
+                <Card.Text>
+                  Build your database of dishes and compare how they vary across
+                  different restaurants.
+                </Card.Text>
+                <Link to="/dishes">
+                  <Button variant="outline-primary">Explore Dishes</Button>
+                </Link>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={4} className="mb-4">
+            <Card className="h-100 text-center">
+              <Card.Body>
+                <FontAwesomeIcon
+                  icon={faStar}
+                  size="3x"
+                  className="mb-3 text-primary"
+                />
+                <Card.Title>Judgments</Card.Title>
+                <Card.Text>
+                  Record detailed judgments with multiple criteria to remember
+                  what made a dish special.
+                </Card.Text>
+                <Link to="/judgments">
+                  <Button variant="outline-primary">Explore Judgments</Button>
+                </Link>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+
+        <Row className="mb-4">
+          <Col md={12} className="text-center">
+            <h2>Get Started</h2>
+            <p>
+              Create an account or login to start recording your culinary
+              experiences.
+            </p>
+            <div className="mt-4">
+              <Link to="/register" className="me-3">
+                <Button variant="primary" size="lg">
+                  Register
+                </Button>
+              </Link>
+              <Link to="/login">
+                <Button variant="outline-primary" size="lg">
+                  Login
+                </Button>
+              </Link>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </div>
+  );
+};
+
+export default Home;

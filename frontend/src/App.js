@@ -1,0 +1,158 @@
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+
+// Layout Components
+import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
+
+// Auth Components
+import Register from "./components/auth/Register";
+import Login from "./components/auth/Login";
+
+// Restaurant Components
+import RestaurantList from "./components/restaurants/RestaurantList";
+import RestaurantForm from "./components/restaurants/RestaurantForm";
+import RestaurantDetail from "./components/restaurants/RestaurantDetail";
+
+// Dish Components
+import DishList from "./components/dishes/DishList";
+import DishForm from "./components/dishes/DishForm";
+import DishDetail from "./components/dishes/DishDetail";
+
+// Judgment Components
+import JudgmentList from "./components/judgments/JudgmentList";
+import JudgmentForm from "./components/judgments/JudgmentForm";
+import JudgmentDetail from "./components/judgments/JudgmentDetail";
+
+// Context
+import { AuthProvider } from "./context/AuthContext";
+import PrivateRoute from "./components/auth/PrivateRoute";
+
+// Pages
+import Home from "./components/layout/Home";
+
+function App() {
+  return (
+    <AuthProvider>
+      <Router>
+        <div className="app-container">
+          <Navbar />
+          <main className="container py-4">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Login />} />
+
+              <Route
+                path="/restaurants"
+                element={
+                  <PrivateRoute>
+                    <RestaurantList />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/restaurants/new"
+                element={
+                  <PrivateRoute>
+                    <RestaurantForm />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/restaurants/:id"
+                element={
+                  <PrivateRoute>
+                    <RestaurantDetail />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/restaurants/:id/edit"
+                element={
+                  <PrivateRoute>
+                    <RestaurantForm />
+                  </PrivateRoute>
+                }
+              />
+
+              <Route
+                path="/dishes"
+                element={
+                  <PrivateRoute>
+                    <DishList />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/dishes/new"
+                element={
+                  <PrivateRoute>
+                    <DishForm />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/dishes/:id"
+                element={
+                  <PrivateRoute>
+                    <DishDetail />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/dishes/:id/edit"
+                element={
+                  <PrivateRoute>
+                    <DishForm />
+                  </PrivateRoute>
+                }
+              />
+
+              <Route
+                path="/judgments"
+                element={
+                  <PrivateRoute>
+                    <JudgmentList />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/judgments/new"
+                element={
+                  <PrivateRoute>
+                    <JudgmentForm />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/judgments/:id"
+                element={
+                  <PrivateRoute>
+                    <JudgmentDetail />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/judgments/:id/edit"
+                element={
+                  <PrivateRoute>
+                    <JudgmentForm />
+                  </PrivateRoute>
+                }
+              />
+            </Routes>
+          </main>
+          <Footer />
+          <ToastContainer position="bottom-right" />
+        </div>
+      </Router>
+    </AuthProvider>
+  );
+}
+
+export default App;
