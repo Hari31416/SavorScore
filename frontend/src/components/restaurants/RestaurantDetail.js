@@ -101,24 +101,28 @@ const RestaurantDetail = () => {
 
   return (
     <div className="restaurant-detail">
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h1>{restaurant.name}</h1>
-        <div>
-          <Link to={`/restaurants/${id}/edit`} className="me-2">
-            <Button variant="outline-primary">
-              <FontAwesomeIcon icon={faEdit} className="me-2" />
-              Edit
-            </Button>
-          </Link>
-          <Button variant="outline-danger" onClick={handleDelete}>
-            <FontAwesomeIcon icon={faTrashAlt} className="me-2" />
-            Delete
-          </Button>
-        </div>
-      </div>
-
-      <Row className="mb-4">
+      <Row className="justify-content-center mb-4">
         <Col md={8}>
+          <div className="d-flex justify-content-between align-items-center mb-4">
+            <h1>{restaurant.name}</h1>
+            <div>
+              <Link to={`/restaurants/${id}/edit`} className="me-2">
+                <Button variant="outline-primary">
+                  <FontAwesomeIcon icon={faEdit} className="me-2" />
+                  Edit
+                </Button>
+              </Link>
+              <Button variant="outline-danger" onClick={handleDelete}>
+                <FontAwesomeIcon icon={faTrashAlt} className="me-2" />
+                Delete
+              </Button>
+            </div>
+          </div>
+        </Col>
+      </Row>
+
+      <Row className="justify-content-center mb-4">
+        <Col md={4}>
           <Card>
             <Card.Body>
               <h4 className="mb-3">Restaurant Details</h4>
@@ -187,17 +191,19 @@ const RestaurantDetail = () => {
         </Col>
       </Row>
 
-      <h3 className="mb-3">Dish Ratings</h3>
+      <Row className="justify-content-center mb-4">
+        <Col md={8}>
+          <h3 className="mb-3">Dish Ratings</h3>
 
-      {ratings.length === 0 ? (
-        <Card>
-          <Card.Body className="text-center py-5">
-            <p className="mb-3">No ratings for this restaurant yet.</p>
-            <Link to="/ratings/new" state={{ restaurantId: id }}>
-              <Button variant="outline-primary">Add First Rating</Button>
-            </Link>
-          </Card.Body>
-        </Card>
+          {ratings.length === 0 ? (
+            <Card>
+              <Card.Body className="text-center py-5">
+                <p className="mb-3">No ratings for this restaurant yet.</p>
+                <Link to="/ratings/new" state={{ restaurantId: id }}>
+                  <Button variant="outline-primary">Add First Rating</Button>
+                </Link>
+              </Card.Body>
+            </Card>
       ) : (
         <Row>
           {ratings.map((rating) => (
@@ -236,6 +242,8 @@ const RestaurantDetail = () => {
           ))}
         </Row>
       )}
+        </Col>
+      </Row>
     </div>
   );
 };

@@ -69,28 +69,32 @@ const RatingDetail = () => {
 
   return (
     <div className="rating-detail">
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h1>{rating.dish.name}</h1>
-        <div>
-          <Link to={`/ratings/${id}/edit`} className="me-2">
-            <Button variant="outline-primary">
-              <FontAwesomeIcon icon={faEdit} className="me-2" />
-              Edit
-            </Button>
-          </Link>
-          <Button variant="outline-danger" onClick={handleDelete}>
-            <FontAwesomeIcon icon={faTrashAlt} className="me-2" />
-            Delete
-          </Button>
-        </div>
-      </div>
-
-      <Row className="mb-4">
+      <Row className="justify-content-center mb-4">
         <Col md={8}>
+          <div className="d-flex justify-content-between align-items-center mb-4">
+            <h1>{rating.dish.name}</h1>
+            <div>
+              <Link to={`/ratings/${id}/edit`} className="me-2">
+                <Button variant="outline-primary">
+                  <FontAwesomeIcon icon={faEdit} className="me-2" />
+                  Edit
+                </Button>
+              </Link>
+              <Button variant="outline-danger" onClick={handleDelete}>
+                <FontAwesomeIcon icon={faTrashAlt} className="me-2" />
+                Delete
+              </Button>
+            </div>
+          </div>
+        </Col>
+      </Row>
+
+      <Row className="mb-4 justify-content-center">
+        <Col md={4}>
           <Card className="mb-4">
             <Card.Body>
               <Row>
-                <Col md={6}>
+                <Col>
                   <h4 className="mb-3">Dish & Restaurant</h4>
                   <p>
                     <Link to={`/dishes/${rating.dish._id}`}>
@@ -112,22 +116,6 @@ const RatingDetail = () => {
                     {new Date(rating.date).toLocaleDateString()}
                   </p>
                 </Col>
-                <Col md={6}>
-                  <h4 className="mb-3">Overall Score</h4>
-                  <div className="rating-score mb-2">
-                    {rating.overallScore ? rating.overallScore : "N/A"}
-                  </div>
-                  <div className="rating-score-label mb-3">
-                    {(() => {
-                      const score = rating.overallScore || 0;
-                      if (score <= 1.5) return "Poor";
-                      if (score <= 2.5) return "Fair";
-                      if (score <= 3.5) return "Good";
-                      if (score <= 4.5) return "Very Good";
-                      return "Excellent";
-                    })()}
-                  </div>
-                </Col>
               </Row>
             </Card.Body>
           </Card>
@@ -142,6 +130,25 @@ const RatingDetail = () => {
           )}
         </Col>
         <Col md={4}>
+          <Card className="mb-4">
+            <Card.Body>
+              <h4 className="mb-3">Overall Score</h4>
+              <div className="rating-score mb-2">
+                {rating.overallScore ? rating.overallScore : "N/A"}
+              </div>
+              <div className="rating-score-label mb-3">
+                {(() => {
+                  const score = rating.overallScore || 0;
+                  if (score <= 1.5) return "Poor";
+                  if (score <= 2.5) return "Fair";
+                  if (score <= 3.5) return "Good";
+                  if (score <= 4.5) return "Very Good";
+                  return "Excellent";
+                })()}
+              </div>
+            </Card.Body>
+          </Card>
+          
           <Card>
             <Card.Body>
               <h4 className="mb-3">Detailed Ratings</h4>
@@ -234,17 +241,21 @@ const RatingDetail = () => {
         </Col>
       </Row>
 
-      <div className="d-flex justify-content-between">
-        <Button
-          variant="outline-secondary"
-          onClick={() => navigate("/ratings")}
-        >
-          Back to Ratings
-        </Button>
-        <Link to="/ratings/new">
-          <Button variant="primary">Add Another Rating</Button>
-        </Link>
-      </div>
+      <Row className="justify-content-center">
+        <Col md={8}>
+          <div className="d-flex justify-content-between">
+            <Button
+              variant="outline-secondary"
+              onClick={() => navigate("/ratings")}
+            >
+              Back to Ratings
+            </Button>
+            <Link to="/ratings/new">
+              <Button variant="primary">Add Another Rating</Button>
+            </Link>
+          </div>
+        </Col>
+      </Row>
     </div>
   );
 };

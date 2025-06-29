@@ -117,23 +117,28 @@ const DishDetail = () => {
 
   return (
     <div className="dish-detail">
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h1>{dish.name}</h1>
-        <div>
-          <Link to={`/dishes/${id}/edit`} className="me-2">
-            <Button variant="outline-primary">
-              <FontAwesomeIcon icon={faEdit} className="me-2" />
-              Edit
-            </Button>
-          </Link>
-          <Button variant="outline-danger" onClick={handleDelete}>
-            <FontAwesomeIcon icon={faTrashAlt} className="me-2" />
-            Delete
-          </Button>
-        </div>
-      </div>
-      <Row className="mb-4">
-        <Col md={6}>
+      <Row className="justify-content-center mb-4">
+        <Col md={8}>
+          <div className="d-flex justify-content-between align-items-center mb-4">
+            <h1>{dish.name}</h1>
+            <div>
+              <Link to={`/dishes/${id}/edit`} className="me-2">
+                <Button variant="outline-primary">
+                  <FontAwesomeIcon icon={faEdit} className="me-2" />
+                  Edit
+                </Button>
+              </Link>
+              <Button variant="outline-danger" onClick={handleDelete}>
+                <FontAwesomeIcon icon={faTrashAlt} className="me-2" />
+                Delete
+              </Button>
+            </div>
+          </div>
+        </Col>
+      </Row>
+
+      <Row className="justify-content-center mb-4">
+        <Col md={4}>
           <Card>
             <Card.Body>
               <h4 className="mb-3">Dish Details</h4>
@@ -153,7 +158,7 @@ const DishDetail = () => {
             </Card.Body>
           </Card>
         </Col>
-        <Col md={6}>
+        <Col md={4}>
           <Card>
             <Card.Body>
               <h4 className="mb-3">Rating Summary</h4>
@@ -262,18 +267,21 @@ const DishDetail = () => {
           </Card>
         </Col>
       </Row>
-      <h3 className="mb-3">Ratings by Restaurant</h3>
-      {ratings.length === 0 ? (
-        <Card>
-          <Card.Body className="text-center py-5">
-            <p className="mb-3">No ratings for this dish yet.</p>
-            <Link to="/ratings/new" state={{ dishId: id }}>
-              <Button variant="outline-primary">Add First Rating</Button>
-            </Link>
-          </Card.Body>
-        </Card>
-      ) : (
-        <Row>
+      
+      <Row className="justify-content-center mb-4">
+        <Col md={8}>
+          <h3 className="mb-3">Ratings by Restaurant</h3>
+          {ratings.length === 0 ? (
+            <Card>
+              <Card.Body className="text-center py-5">
+                <p className="mb-3">No ratings for this dish yet.</p>
+                <Link to="/ratings/new" state={{ dishId: id }}>
+                  <Button variant="outline-primary">Add First Rating</Button>
+                </Link>
+              </Card.Body>
+            </Card>
+          ) : (
+            <Row>
           {ratings.map((rating) => (
             <Col md={6} className="mb-4" key={rating._id}>
               <Card>
@@ -310,7 +318,8 @@ const DishDetail = () => {
           ))}
         </Row>
       )}
-      }
+        </Col>
+      </Row>
     </div>
   );
 };
