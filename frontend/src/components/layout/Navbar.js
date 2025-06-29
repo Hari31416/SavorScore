@@ -53,8 +53,55 @@ const Navbar = () => {
   return (
     <BootstrapNavbar bg="dark" variant="dark" expand="lg" className="mb-4">
       <Container>
-        <BootstrapNavbar.Brand as={Link} to="/">
-          SavorScore
+        <BootstrapNavbar.Brand
+          as={Link}
+          to="/"
+          style={{ display: "flex", alignItems: "center" }}
+        >
+          <span
+            className="savorscore-logo-wrapper"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              marginRight: 8,
+            }}
+          >
+            <svg
+              className="savorscore-logo"
+              width="32"
+              height="32"
+              viewBox="0 0 64 64"
+              style={{ color: "var(--primary-color)" }}
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="32"
+                cy="32"
+                r="30"
+                fill="currentColor"
+                stroke="#fff"
+                strokeWidth="3"
+              />
+              <text
+                x="32"
+                y="38"
+                textAnchor="middle"
+                fontSize="22"
+                fontFamily="Arial, Helvetica, sans-serif"
+                fill="#fff"
+                fontWeight="bold"
+              >
+                SS
+              </text>
+              <path
+                d="M20 48 Q32 56 44 48"
+                stroke="#fff"
+                strokeWidth="2"
+                fill="none"
+              />
+            </svg>
+          </span>
+          <span className="savorscore-brand">SavorScore</span>
         </BootstrapNavbar.Brand>
         <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
         <BootstrapNavbar.Collapse id="basic-navbar-nav">

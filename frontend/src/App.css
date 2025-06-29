@@ -553,3 +553,39 @@ main {
   align-self: flex-start;
   margin-top: 0.2rem;
 }
+
+/* Savorscore Brand Styles */
+.savorscore-brand {
+  font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1.7rem;
+  letter-spacing: 1px;
+  color: var(--primary-color);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: color 0.3s;
+}
+
+body.dark-theme .savorscore-brand {
+  color: var(--primary-color);
+}
+
+body.light-theme .savorscore-brand {
+  color: var(--primary-color);
+}
+
+.savorscore-brand:hover {
+  color: #a259c4;
+}
+
+.savorscore-logo {
+  filter: drop-shadow(0 1px 4px rgba(0,0,0,0.08));
+  transition: filter 0.3s;
+}
+
+body.dark-theme .savorscore-logo {
+  filter: drop-shadow(0 1px 8px rgba(142,68,173,0.25));
+}
+
+body.light-theme .savorscore-logo {
+  filter: drop-shadow(0 1px 8px rgba(142,68,173,0.15));
+}
