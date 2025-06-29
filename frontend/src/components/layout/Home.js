@@ -35,7 +35,12 @@ const Home = () => {
                 <FontAwesomeIcon
                   icon={faStore}
                   size="3x"
-                  className="mb-3 text-primary"
+                  className="mb-3 home-icon"
+                  style={{
+                    color: isDarkMode
+                      ? "var(--primary-color)"
+                      : "var(--secondary-color)",
+                  }}
                 />
                 <Card.Title>Restaurants</Card.Title>
                 <Card.Text>
@@ -54,7 +59,12 @@ const Home = () => {
                 <FontAwesomeIcon
                   icon={faUtensils}
                   size="3x"
-                  className="mb-3 text-primary"
+                  className="mb-3 home-icon"
+                  style={{
+                    color: isDarkMode
+                      ? "var(--primary-color)"
+                      : "var(--secondary-color)",
+                  }}
                 />
                 <Card.Title>Dishes</Card.Title>
                 <Card.Text>
@@ -73,7 +83,12 @@ const Home = () => {
                 <FontAwesomeIcon
                   icon={faStar}
                   size="3x"
-                  className="mb-3 text-primary"
+                  className="mb-3 home-icon"
+                  style={{
+                    color: isDarkMode
+                      ? "var(--primary-color)"
+                      : "var(--secondary-color)",
+                  }}
                 />
                 <Card.Title>Ratings</Card.Title>
                 <Card.Text>
