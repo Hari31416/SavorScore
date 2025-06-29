@@ -23,11 +23,6 @@ import DishList from "./components/dishes/DishList";
 import DishForm from "./components/dishes/DishForm";
 import DishDetail from "./components/dishes/DishDetail";
 
-// Judgment Components
-import JudgmentList from "./components/judgments/JudgmentList";
-import JudgmentForm from "./components/judgments/JudgmentForm";
-import JudgmentDetail from "./components/judgments/JudgmentDetail";
-
 // Rating Components
 import RatingList from "./components/ratings/RatingList";
 import RatingForm from "./components/ratings/RatingForm";
@@ -129,39 +124,6 @@ const AppContent = () => {
             element={
               <PrivateRoute>
                 <DishForm />
-              </PrivateRoute>
-            }
-          />
-
-          <Route
-            path="/judgments"
-            element={
-              <PrivateRoute>
-                <JudgmentList />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/judgments/new"
-            element={
-              <PrivateRoute>
-                <JudgmentForm />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/judgments/:id"
-            element={
-              <PrivateRoute>
-                <JudgmentDetail />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/judgments/:id/edit"
-            element={
-              <PrivateRoute>
-                <JudgmentForm />
               </PrivateRoute>
             }
           />

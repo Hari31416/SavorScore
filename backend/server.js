@@ -8,7 +8,6 @@ const morgan = require("morgan");
 const authRoutes = require("./routes/auth");
 const restaurantRoutes = require("./routes/restaurants");
 const dishRoutes = require("./routes/dishes");
-const judgmentRoutes = require("./routes/judgments");
 const ratingRoutes = require("./routes/ratings");
 
 const app = express();
@@ -29,7 +28,6 @@ mongoose
 app.use("/api/auth", authRoutes);
 app.use("/api/restaurants", restaurantRoutes);
 app.use("/api/dishes", dishRoutes);
-app.use("/api/judgments", judgmentRoutes);
 app.use("/api/ratings", ratingRoutes);
 
 // Error handling middleware

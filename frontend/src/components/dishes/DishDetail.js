@@ -4,13 +4,13 @@ import { Card, Button, Row, Col, Alert } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashAlt, faStar } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
-import { getDishById, deleteDish, getJudgments } from "../../utils/api";
+import { getDishById, deleteDish, getRatings } from "../../utils/api";
 
 const DishDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [dish, setDish] = useState(null);
-  const [judgments, setJudgments] = useState([]);
+  const [ratings, setRatings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -20,12 +20,12 @@ const DishDetail = () => {
         const dishData = await getDishById(id);
         setDish(dishData);
 
-        const judgmentsData = await getJudgments();
-        // Filter judgments for this dish
-        const filteredJudgments = judgmentsData.filter(
-          (judgment) => judgment.dish._id === id
+        const ratingsData = await getRatings();
+        // Filter ratings for this dish
+        const filteredRatings = ratingsData.filter(
+          (rating) => rating.dish._id === id
         );
-        setJudgments(filteredJudgments);
+        setRatings(filteredRatings);
       } catch (error) {
         setError("Failed to fetch dish details");
         console.error(error);
@@ -69,47 +69,47 @@ const DishDetail = () => {
 
   // Calculate average ratings
   const calculateAverages = () => {
-    if (judgments.length === 0) return null;
+    if (ratings.length === 0) return null;
 
     // Check if we can use overallScore
-    const hasOverallScore = judgments.some((j) => j.overallScore !== undefined);
+    const hasOverallScore = ratings.some((r) => r.overallScore !== undefined);
 
     const totalOverallScore = hasOverallScore
-      ? judgments.reduce((sum, j) => sum + (j.overallScore || 0), 0)
+      ? ratings.reduce((sum, r) => sum + (r.overallScore || 0), 0)
       : 0;
 
-    const totalOverall = judgments.reduce(
-      (sum, j) => sum + j.overallFlavorExperience,
+    const totalOverall = ratings.reduce(
+      (sum, r) => sum + r.overallFlavorExperience,
       0
     );
-    const totalIngredient = judgments.reduce(
-      (sum, j) => sum + j.ingredientQuality,
+    const totalIngredient = ratings.reduce(
+      (sum, r) => sum + r.ingredientQuality,
       0
     );
-    const totalTexture = judgments.reduce(
-      (sum, j) => sum + j.textureMouthfeel,
+    const totalTexture = ratings.reduce(
+      (sum, r) => sum + r.textureMouthfeel,
       0
     );
-    const totalExecution = judgments.reduce(
-      (sum, j) => sum + j.executionCraftsmanship,
+    const totalExecution = ratings.reduce(
+      (sum, r) => sum + r.executionCraftsmanship,
       0
     );
-    const totalValue = judgments.reduce((sum, j) => sum + j.valueForMoney, 0);
-    const totalCraving = judgments.reduce(
-      (sum, j) => sum + j.cravingReorderLikelihood,
+    const totalValue = ratings.reduce((sum, r) => sum + r.valueForMoney, 0);
+    const totalCraving = ratings.reduce(
+      (sum, r) => sum + r.cravingReorderLikelihood,
       0
     );
 
     return {
       overallScore: hasOverallScore
-        ? (totalOverallScore / judgments.length).toFixed(1)
+        ? (totalOverallScore / ratings.length).toFixed(1)
         : null,
-      overallFlavorExperience: (totalOverall / judgments.length).toFixed(1),
-      ingredientQuality: (totalIngredient / judgments.length).toFixed(1),
-      textureMouthfeel: (totalTexture / judgments.length).toFixed(1),
-      executionCraftsmanship: (totalExecution / judgments.length).toFixed(1),
-      valueForMoney: (totalValue / judgments.length).toFixed(1),
-      cravingReorderLikelihood: (totalCraving / judgments.length).toFixed(1),
+      overallFlavorExperience: (totalOverall / ratings.length).toFixed(1),
+      ingredientQuality: (totalIngredient / ratings.length).toFixed(1),
+      textureMouthfeel: (totalTexture / ratings.length).toFixed(1),
+      executionCraftsmanship: (totalExecution / ratings.length).toFixed(1),
+      valueForMoney: (totalValue / ratings.length).toFixed(1),
+      cravingReorderLikelihood: (totalCraving / ratings.length).toFixed(1),
     };
   };
 
@@ -132,7 +132,6 @@ const DishDetail = () => {
           </Button>
         </div>
       </div>
-
       <Row className="mb-4">
         <Col md={6}>
           <Card>
@@ -162,13 +161,13 @@ const DishDetail = () => {
               {averages ? (
                 <>
                   <div className="d-flex justify-content-between align-items-center mb-2">
-                    <div className="judgment-score">
+                    <div className="rating-score">
                       {averages.overallScore ||
                         averages.overallFlavorExperience}
                     </div>
                     <div className="text-muted">
-                      Based on {judgments.length} judgment
-                      {judgments.length !== 1 ? "s" : ""}
+                      Based on {ratings.length} rating
+                      {ratings.length !== 1 ? "s" : ""}
                     </div>
                   </div>
 
@@ -248,14 +247,14 @@ const DishDetail = () => {
                   </div>
                 </>
               ) : (
-                <p className="text-muted">No judgments yet</p>
+                <p className="text-muted">No ratings yet</p>
               )}
 
               <div className="mt-4 text-center">
-                <Link to="/judgments/new" state={{ dishId: id }}>
+                <Link to="/ratings/new" state={{ dishId: id }}>
                   <Button variant="primary">
                     <FontAwesomeIcon icon={faStar} className="me-2" />
-                    Add Judgment
+                    Add Rating
                   </Button>
                 </Link>
               </div>
@@ -263,42 +262,40 @@ const DishDetail = () => {
           </Card>
         </Col>
       </Row>
-
-      <h3 className="mb-3">Judgments by Restaurant</h3>
-
-      {judgments.length === 0 ? (
+      <h3 className="mb-3">Ratings by Restaurant</h3>
+      {ratings.length === 0 ? (
         <Card>
           <Card.Body className="text-center py-5">
-            <p className="mb-3">No judgments for this dish yet.</p>
-            <Link to="/judgments/new" state={{ dishId: id }}>
-              <Button variant="outline-primary">Add First Judgment</Button>
+            <p className="mb-3">No ratings for this dish yet.</p>
+            <Link to="/ratings/new" state={{ dishId: id }}>
+              <Button variant="outline-primary">Add First Rating</Button>
             </Link>
           </Card.Body>
         </Card>
       ) : (
         <Row>
-          {judgments.map((judgment) => (
-            <Col md={6} className="mb-4" key={judgment._id}>
+          {ratings.map((rating) => (
+            <Col md={6} className="mb-4" key={rating._id}>
               <Card>
                 <Card.Body>
                   <div className="d-flex justify-content-between align-items-center mb-3">
-                    <h5 className="mb-0">{judgment.restaurant.name}</h5>
+                    <h5 className="mb-0">{rating.restaurant.name}</h5>
                     <span className="badge bg-primary rounded-pill">
-                      {judgment.overallScore !== undefined
-                        ? judgment.overallScore
-                        : judgment.overallFlavorExperience}
+                      {rating.overallScore !== undefined
+                        ? rating.overallScore
+                        : rating.overallFlavorExperience}
                       /5
                     </span>
                   </div>
 
                   <p className="text-muted small">
-                    Judged on {new Date(judgment.date).toLocaleDateString()}
+                    Rated on {new Date(rating.date).toLocaleDateString()}
                   </p>
 
-                  {judgment.notes && <p className="mt-2">{judgment.notes}</p>}
+                  {rating.notes && <p className="mt-2">{rating.notes}</p>}
                 </Card.Body>
                 <Card.Footer className="bg-white">
-                  <Link to={`/judgments/${judgment._id}`}>
+                  <Link to={`/ratings/${rating._id}`}>
                     <Button
                       variant="outline-primary"
                       size="sm"
@@ -313,6 +310,7 @@ const DishDetail = () => {
           ))}
         </Row>
       )}
+      }
     </div>
   );
 };
