@@ -143,3 +143,55 @@ export const deleteJudgment = async (id) => {
     throw error.response?.data?.message || "Error deleting judgment";
   }
 };
+
+// Rating API calls
+export const getRatings = async () => {
+  try {
+    const response = await axios.get("/api/ratings");
+    return response.data;
+  } catch (error) {
+    throw error.response?.data?.message || "Error fetching ratings";
+  }
+};
+
+export const getRatingById = async (id) => {
+  try {
+    const response = await axios.get(`/api/ratings/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data?.message || "Error fetching rating";
+  }
+};
+
+export const createRating = async (ratingData) => {
+  try {
+    console.log("Sending rating data:", ratingData);
+    const response = await axios.post("/api/ratings", ratingData);
+    console.log("Rating creation response:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Rating creation error:",
+      error.response?.data || error.message
+    );
+    throw error.response?.data?.message || "Error creating rating";
+  }
+};
+
+export const updateRating = async (id, ratingData) => {
+  try {
+    const response = await axios.put(`/api/ratings/${id}`, ratingData);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data?.message || "Error updating rating";
+  }
+};
+
+export const deleteRating = async (id) => {
+  try {
+    await axios.delete(`/api/ratings/${id}`);
+    return true;
+  } catch (error) {
+    throw error.response?.data?.message || "Error deleting rating";
+  }
+};

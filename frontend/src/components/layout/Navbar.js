@@ -24,8 +24,8 @@ const Navbar = () => {
 
   const authLinks = (
     <>
-      <Nav.Link as={Link} to="/judgments">
-        Judgments
+      <Nav.Link as={Link} to="/ratings">
+        Ratings
       </Nav.Link>
       <Nav.Link as={Link} to="/restaurants">
         Restaurants

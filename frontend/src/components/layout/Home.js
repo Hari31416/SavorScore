@@ -22,7 +22,7 @@ const Home = () => {
           <Col md={12} className="text-center">
             <h1 className="display-4 mb-4">Welcome to SavorScore</h1>
             <p className="lead">
-              Your personal dish judgment tracker. Record, analyze, and remember
+              Your personal dish rating tracker. Record, analyze, and remember
               your culinary experiences.
             </p>
           </Col>
@@ -75,13 +75,13 @@ const Home = () => {
                   size="3x"
                   className="mb-3 text-primary"
                 />
-                <Card.Title>Judgments</Card.Title>
+                <Card.Title>Ratings</Card.Title>
                 <Card.Text>
-                  Record detailed judgments with multiple criteria to remember
+                  Record detailed ratings with multiple criteria to remember
                   what made a dish special.
                 </Card.Text>
-                <Link to="/judgments">
-                  <Button variant="outline-primary">Explore Judgments</Button>
+                <Link to="/ratings">
+                  <Button variant="outline-primary">Explore Ratings</Button>
                 </Link>
               </Card.Body>
             </Card>

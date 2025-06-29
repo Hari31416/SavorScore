@@ -28,6 +28,11 @@ import JudgmentList from "./components/judgments/JudgmentList";
 import JudgmentForm from "./components/judgments/JudgmentForm";
 import JudgmentDetail from "./components/judgments/JudgmentDetail";
 
+// Rating Components
+import RatingList from "./components/ratings/RatingList";
+import RatingForm from "./components/ratings/RatingForm";
+import RatingDetail from "./components/ratings/RatingDetail";
+
 // Context
 import { AuthContext, AuthProvider } from "./context/AuthContext";
 import { ThemeContext, ThemeProvider } from "./context/ThemeContext";
@@ -157,6 +162,39 @@ const AppContent = () => {
             element={
               <PrivateRoute>
                 <JudgmentForm />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/ratings"
+            element={
+              <PrivateRoute>
+                <RatingList />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/ratings/new"
+            element={
+              <PrivateRoute>
+                <RatingForm />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/ratings/:id"
+            element={
+              <PrivateRoute>
+                <RatingDetail />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/ratings/:id/edit"
+            element={
+              <PrivateRoute>
+                <RatingForm />
               </PrivateRoute>
             }
           />
