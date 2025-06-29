@@ -34,10 +34,6 @@ const Navbar = () => {
         Dishes
       </Nav.Link>
       <NavDropdown title={user?.username || "Account"} id="nav-dropdown">
-        <NavDropdown.Item as={Link} to="/profile">
-          Profile
-        </NavDropdown.Item>
-        <NavDropdown.Divider />
         <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
       </NavDropdown>
     </>
