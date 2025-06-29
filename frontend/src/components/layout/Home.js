@@ -4,13 +4,19 @@ import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUtensils, faStore, faStar } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../../context/AuthContext";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const Home = () => {
   // Get authentication state from AuthContext
   const { isAuthenticated } = useContext(AuthContext);
+  // Get theme state from ThemeContext
+  const { isDarkMode } = useContext(ThemeContext);
+
+  // Use theme-specific styles
+  const themeClass = isDarkMode ? "dark-theme" : "light-theme";
 
   return (
-    <div className="home-page">
+    <div className={`home-page ${themeClass}`}>
       <Container>
         <Row className="mb-5">
           <Col md={12} className="text-center">

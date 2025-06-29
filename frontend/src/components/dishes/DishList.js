@@ -8,6 +8,7 @@ import {
   faPizzaSlice,
 } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
+import ThemedSelect from "../common/ThemedSelect";
 import { getDishes } from "../../utils/api";
 
 const DishList = () => {
@@ -98,17 +99,12 @@ const DishList = () => {
               </InputGroup>
             </Col>
             <Col md={4}>
-              <Form.Select
+              <ThemedSelect
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
-              >
-                <option value="">All Categories</option>
-                {getCategories().map((category) => (
-                  <option key={category} value={category}>
-                    {category}
-                  </option>
-                ))}
-              </Form.Select>
+                placeholder="All Categories"
+                options={getCategories()}
+              />
             </Col>
           </Row>
         </Card.Body>

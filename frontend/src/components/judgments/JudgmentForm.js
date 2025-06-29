@@ -68,7 +68,7 @@ const RatingInput = ({ name, max, value, onChange }) => {
       >
         {buttons}
       </div>
-      <span className="selected-rating ms-2">
+      <span className="selected-rating ms-2 dark-mode-text">
         Selected: <strong>{value}</strong> / {max} ({getDescription(value, max)}
         )
       </span>
@@ -473,18 +473,6 @@ const JudgmentForm = () => {
 
                   <div className="mt-4 mb-4 p-3 bg-light rounded">
                     <h4 className="mb-2">Overall Score</h4>
-                    <p className="text-muted">
-                      This score is calculated automatically based on a weighted
-                      average:
-                    </p>
-                    <ul className="small text-muted">
-                      <li>Overall Flavor Experience: 30%</li>
-                      <li>Ingredient Quality: 15%</li>
-                      <li>Texture & Mouthfeel: 15%</li>
-                      <li>Execution & Craftsmanship: 15%</li>
-                      <li>Value for Money: 15%</li>
-                      <li>Craving & Reorder Likelihood: 10%</li>
-                    </ul>
                     <div className="calculated-score">
                       {(() => {
                         const weights = {
