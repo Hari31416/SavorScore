@@ -395,6 +395,7 @@ main {
 .dark-theme .btn-outline-primary:hover {
   background-color: var(--primary-color);
   color: var(--dark-text-color);
+  border-color: var(--primary-color);
 }
 
 /* --- ThemedSelect placeholder option color --- */
@@ -433,4 +434,30 @@ main {
 .dark-theme .card-footer {
   background-color: var(--dark-card-bg) !important;
   border-top: 1px solid var(--dark-border-color) !important;
+}
+
+/* --- Dark mode for calculated-score (Overall Score) --- */
+.dark-theme .calculated-score {
+  background-color: var(--dark-card-bg) !important;
+  color: var(--dark-text-color) !important;
+  border-left: 5px solid var(--primary-color);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.dark-theme .calculated-score .display-4 {
+  color: var(--primary-color) !important;
+}
+
+.dark-theme .calculated-score .fs-5,
+.dark-theme .calculated-score .text-muted,
+.dark-theme .calculated-score .small {
+  color: var(--dark-text-color) !important;
+  opacity: 0.8;
+}
+
+/* --- Dark mode for selected-rating span in RatingInput --- */
+.dark-theme .selected-rating {
+  background-color: var(--dark-card-bg) !important;
+  color: var(--dark-text-color) !important;
+  border: 1px solid var(--dark-border-color) !important;
 }

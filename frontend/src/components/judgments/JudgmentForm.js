@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -19,6 +19,7 @@ import {
   getRestaurants,
   getDishes,
 } from "../../utils/api";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const RatingInput = ({ name, max, value, onChange }) => {
   const [hoveredValue, setHoveredValue] = useState(null);
@@ -86,6 +87,7 @@ const JudgmentForm = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const isEditMode = !!id;
+  const { isDarkMode } = useContext(ThemeContext);
 
   // Get preselected values from location state (if navigated from restaurant or dish pages)
   const preselectedRestaurantId = location.state?.restaurantId || "";
@@ -228,9 +230,15 @@ const JudgmentForm = () => {
   }
 
   return (
-    <div className="row justify-content-center">
+    <div
+      className={`row justify-content-center ${
+        isDarkMode ? "dark-theme" : "light-theme"
+      }`}
+    >
       <div className="col-md-10">
-        <Card>
+        <Card
+          className={isDarkMode ? "bg-dark text-light" : "bg-light text-dark"}
+        >
           <Card.Body>
             <h2 className="text-center mb-4">
               {isEditMode ? "Edit Judgment" : "Add New Judgment"}
@@ -252,7 +260,11 @@ const JudgmentForm = () => {
                           as="select"
                           id="dish"
                           name="dish"
-                          className="form-control"
+                          className={`form-control ${
+                            isDarkMode
+                              ? "bg-dark text-light border-secondary"
+                              : "bg-light text-dark"
+                          }`}
                         >
                           <option value="">Select a dish</option>
                           {dishes.map((dish) => (
@@ -276,7 +288,11 @@ const JudgmentForm = () => {
                           as="select"
                           id="restaurant"
                           name="restaurant"
-                          className="form-control"
+                          className={`form-control ${
+                            isDarkMode
+                              ? "bg-dark text-light border-secondary"
+                              : "bg-light text-dark"
+                          }`}
                         >
                           <option value="">Select a restaurant</option>
                           {restaurants.map((restaurant) => (
@@ -303,7 +319,11 @@ const JudgmentForm = () => {
                       type="date"
                       id="date"
                       name="date"
-                      className="form-control"
+                      className={`form-control ${
+                        isDarkMode
+                          ? "bg-dark text-light border-secondary"
+                          : "bg-light text-dark"
+                      }`}
                     />
                     <ErrorMessage
                       name="date"
@@ -461,7 +481,11 @@ const JudgmentForm = () => {
                       as="textarea"
                       id="notes"
                       name="notes"
-                      className="form-control"
+                      className={`form-control ${
+                        isDarkMode
+                          ? "bg-dark text-light border-secondary"
+                          : "bg-light text-dark"
+                      }`}
                       rows="4"
                     />
                     <ErrorMessage
@@ -471,7 +495,11 @@ const JudgmentForm = () => {
                     />
                   </div>
 
-                  <div className="mt-4 mb-4 p-3 bg-light rounded">
+                  <div
+                    className={`mt-4 mb-4 p-3 rounded ${
+                      isDarkMode ? "bg-dark" : "bg-light"
+                    }`}
+                  >
                     <h4 className="mb-2">Overall Score</h4>
                     <div className="calculated-score">
                       {(() => {
