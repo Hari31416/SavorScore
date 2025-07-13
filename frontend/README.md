@@ -1,6 +1,28 @@
-# Getting Started with Create React App
+# SavorScore Frontend
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Configuration
+
+Before running the application, you need to configure the backend API URL:
+
+1. Copy the example environment file:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+2. Edit the `.env` file and set the `REACT_APP_API_BASE_URL` variable:
+
+   ```env
+   REACT_APP_API_BASE_URL=http://localhost:5000
+   ```
+
+For production deployments, set this to your deployed backend URL:
+
+```env
+REACT_APP_API_BASE_URL=https://your-backend-domain.com
+```
 
 ## Available Scripts
 

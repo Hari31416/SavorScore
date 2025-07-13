@@ -1,6 +1,14 @@
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
+// Create axios instance with configurable base URL
+const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
+});
+
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -12,10 +20,10 @@ export const AuthProvider = ({ children }) => {
   // Set default header with token
   useEffect(() => {
     if (token) {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       loadUser();
     } else {
-      delete axios.defaults.headers.common["Authorization"];
+      delete api.defaults.headers.common["Authorization"];
       setIsAuthenticated(false);
       setLoading(false);
     }
@@ -24,7 +32,7 @@ export const AuthProvider = ({ children }) => {
   // Load user from token
   const loadUser = async () => {
     try {
-      const res = await axios.get("/api/auth/profile");
+      const res = await api.get("/api/auth/profile");
       setUser(res.data);
       setIsAuthenticated(true);
     } catch (err) {
@@ -40,7 +48,7 @@ export const AuthProvider = ({ children }) => {
   // Register user
   const register = async (userData) => {
     try {
-      const res = await axios.post("/api/auth/register", userData);
+      const res = await api.post("/api/auth/register", userData);
       localStorage.setItem("token", res.data.token);
       setToken(res.data.token);
       return { success: true };
@@ -55,7 +63,7 @@ export const AuthProvider = ({ children }) => {
   // Login user
   const login = async (userData) => {
     try {
-      const res = await axios.post("/api/auth/login", userData);
+      const res = await api.post("/api/auth/login", userData);
       localStorage.setItem("token", res.data.token);
       setToken(res.data.token);
       return { success: true };

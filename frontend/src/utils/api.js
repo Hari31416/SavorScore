@@ -1,9 +1,31 @@
 import axios from "axios";
 
+// Create axios instance with configurable base URL
+const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
+});
+
+// Add request interceptor to include auth token
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 // Restaurant API calls
 export const getRestaurants = async () => {
   try {
-    const response = await axios.get("/api/restaurants");
+    const response = await api.get("/api/restaurants");
     return response.data;
   } catch (error) {
     throw error.response?.data?.message || "Error fetching restaurants";
@@ -12,7 +34,7 @@ export const getRestaurants = async () => {
 
 export const getRestaurantById = async (id) => {
   try {
-    const response = await axios.get(`/api/restaurants/${id}`);
+    const response = await api.get(`/api/restaurants/${id}`);
     return response.data;
   } catch (error) {
     throw error.response?.data?.message || "Error fetching restaurant";
@@ -21,7 +43,7 @@ export const getRestaurantById = async (id) => {
 
 export const createRestaurant = async (restaurantData) => {
   try {
-    const response = await axios.post("/api/restaurants", restaurantData);
+    const response = await api.post("/api/restaurants", restaurantData);
     return response.data;
   } catch (error) {
     throw error.response?.data?.message || "Error creating restaurant";
@@ -30,7 +52,7 @@ export const createRestaurant = async (restaurantData) => {
 
 export const updateRestaurant = async (id, restaurantData) => {
   try {
-    const response = await axios.put(`/api/restaurants/${id}`, restaurantData);
+    const response = await api.put(`/api/restaurants/${id}`, restaurantData);
     return response.data;
   } catch (error) {
     throw error.response?.data?.message || "Error updating restaurant";
@@ -39,7 +61,7 @@ export const updateRestaurant = async (id, restaurantData) => {
 
 export const deleteRestaurant = async (id) => {
   try {
-    await axios.delete(`/api/restaurants/${id}`);
+    await api.delete(`/api/restaurants/${id}`);
     return true;
   } catch (error) {
     throw error.response?.data?.message || "Error deleting restaurant";
@@ -49,7 +71,7 @@ export const deleteRestaurant = async (id) => {
 // Dish API calls
 export const getDishes = async () => {
   try {
-    const response = await axios.get("/api/dishes");
+    const response = await api.get("/api/dishes");
     return response.data;
   } catch (error) {
     throw error.response?.data?.message || "Error fetching dishes";
@@ -58,7 +80,7 @@ export const getDishes = async () => {
 
 export const getDishById = async (id) => {
   try {
-    const response = await axios.get(`/api/dishes/${id}`);
+    const response = await api.get(`/api/dishes/${id}`);
     return response.data;
   } catch (error) {
     throw error.response?.data?.message || "Error fetching dish";
@@ -67,7 +89,7 @@ export const getDishById = async (id) => {
 
 export const createDish = async (dishData) => {
   try {
-    const response = await axios.post("/api/dishes", dishData);
+    const response = await api.post("/api/dishes", dishData);
     return response.data;
   } catch (error) {
     throw error.response?.data?.message || "Error creating dish";
@@ -76,7 +98,7 @@ export const createDish = async (dishData) => {
 
 export const updateDish = async (id, dishData) => {
   try {
-    const response = await axios.put(`/api/dishes/${id}`, dishData);
+    const response = await api.put(`/api/dishes/${id}`, dishData);
     return response.data;
   } catch (error) {
     throw error.response?.data?.message || "Error updating dish";
@@ -85,7 +107,7 @@ export const updateDish = async (id, dishData) => {
 
 export const deleteDish = async (id) => {
   try {
-    await axios.delete(`/api/dishes/${id}`);
+    await api.delete(`/api/dishes/${id}`);
     return true;
   } catch (error) {
     throw error.response?.data?.message || "Error deleting dish";
@@ -95,7 +117,7 @@ export const deleteDish = async (id) => {
 // Rating API calls
 export const getRatings = async () => {
   try {
-    const response = await axios.get("/api/ratings");
+    const response = await api.get("/api/ratings");
     return response.data;
   } catch (error) {
     throw error.response?.data?.message || "Error fetching ratings";
@@ -104,7 +126,7 @@ export const getRatings = async () => {
 
 export const getRatingById = async (id) => {
   try {
-    const response = await axios.get(`/api/ratings/${id}`);
+    const response = await api.get(`/api/ratings/${id}`);
     return response.data;
   } catch (error) {
     throw error.response?.data?.message || "Error fetching rating";
@@ -114,7 +136,7 @@ export const getRatingById = async (id) => {
 export const createRating = async (ratingData) => {
   try {
     console.log("Sending rating data:", ratingData);
-    const response = await axios.post("/api/ratings", ratingData);
+    const response = await api.post("/api/ratings", ratingData);
     console.log("Rating creation response:", response.data);
     return response.data;
   } catch (error) {
@@ -128,7 +150,7 @@ export const createRating = async (ratingData) => {
 
 export const updateRating = async (id, ratingData) => {
   try {
-    const response = await axios.put(`/api/ratings/${id}`, ratingData);
+    const response = await api.put(`/api/ratings/${id}`, ratingData);
     return response.data;
   } catch (error) {
     throw error.response?.data?.message || "Error updating rating";
@@ -137,7 +159,7 @@ export const updateRating = async (id, ratingData) => {
 
 export const deleteRating = async (id) => {
   try {
-    await axios.delete(`/api/ratings/${id}`);
+    await api.delete(`/api/ratings/${id}`);
     return true;
   } catch (error) {
     throw error.response?.data?.message || "Error deleting rating";
