@@ -24,6 +24,47 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
+// Health check endpoints
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "OK",
+    message: "Server is running",
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+  });
+});
+
+app.get("/health/detailed", async (req, res) => {
+  const healthCheck = {
+    status: "OK",
+    message: "Server is running",
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    database: {
+      status: "disconnected",
+      message: "Database connection unavailable",
+    },
+  };
+
+  try {
+    // Check database connection
+    if (mongoose.connection.readyState === 1) {
+      healthCheck.database.status = "connected";
+      healthCheck.database.message = "Database connection is healthy";
+    } else {
+      healthCheck.status = "DEGRADED";
+      healthCheck.database.message = "Database connection is not ready";
+    }
+  } catch (error) {
+    healthCheck.status = "ERROR";
+    healthCheck.database.status = "error";
+    healthCheck.database.message = error.message;
+  }
+
+  const statusCode = healthCheck.status === "OK" ? 200 : 503;
+  res.status(statusCode).json(healthCheck);
+});
+
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/restaurants", restaurantRoutes);
